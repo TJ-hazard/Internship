@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+      <form action="/students/postData" method="POST" >
+        <label for="student_id">Student Id<label></label><input type="text" name="student_id" id="student_id" value="<%= old.student_id || '' %>">
+        <% if (errors.student_id) { %>
+            <ul style="color: red;">
+                <% errors.student_id.forEach(error => { %>
+                    <li><%= error %></li>
+                <% }) %>
+            </ul>
+        <% } %>
+
+         <label for="full_name">Full Name<input type="text" name="full_name" id="full_name"><label>
+         <label for="matric_no">Matric Number<input type="text" name="matric_no" id="matric_no"><label>
+         <label for="department">Department<input type="text" name="department" id="department"><label></label> 
+         <label for="level">Level<input type="text" name="level" id="level"><label></label>
+         <label for="faculty">Faculty<input type="text" name="faculty" id="faculty"><label></label>     
+         <label for="phone_number">Phone Number<input type="text" name="phone_number" id="phone_number"><label></label>
+         <label for="email_address">Email Address<input type="text" name="email_address" id="email_address"><label></label>
+         <label for="school">School<input type="text" name="school" id="school"><label></label>
+         <button type='submit' id="btn">Submit</button>
+        </form>
+        <!-- <% if(errors.length > 0) { %>
+            <ul style="color: red;">
+                <%errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                    <% }) %>
+            </ul>
+            <% } %> -->
+</div>
+
+
+</body>
+
+</html>
