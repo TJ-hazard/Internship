@@ -2,19 +2,20 @@ const express = require("express");
 const router = express.Router();
 const { userValidationRules } = require('../pakages/validators');
 const { validationResult } = require('express-validator');
+const { con } = require('../pakages/db.js');
 
-module.exports = (con) => {
-    router.post("/postData", userValidationRules, async (req, res,) => {
+module.exports = () => {
+
+    router.post("/postData", userValidationRules, (req, res,) => {
+
+        console.log(req.body);
+
 
         const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const errorObject = {};
-            errors.array().forEach(err => {
-                errorObject[err.param] = err.msg;
-            });
-            return res.render('register', { errors: errorObject, old: req.body });
-        }
-
+        // if (!errors.isEmpty()) {
+        //     const alert = errors.array();
+        //     return res.render('register', { alert });
+        // };
         const {
             student_id,
             full_name,
@@ -40,10 +41,13 @@ module.exports = (con) => {
         ];
         const insert_query = "INSERT INTO students(student_id,full_name,matric_no,department,level,faculty,phone_number,email_address,school) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)";
         try {
-            await con.query(insert_query, values);
-            res.send('login');
+            console.log("Before insert")
+            con.query(insert_query, values, (err, result) => console.log("err>>", err));
+            res.render('index');
+            // res.send('login');
         } catch (err) {
-            res.status(500).send(err);
+            console.log("err>>", err)
+            // res.status(500).send(err);
         }
 
 
@@ -58,6 +62,7 @@ module.exports = (con) => {
             if (err) {
                 res.status(500).send(err);
             } else {
+                res.render('index',)
                 res.send(result.rows);
             }
         });

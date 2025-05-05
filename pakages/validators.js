@@ -1,8 +1,8 @@
 
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 
 const userValidationRules = [
-    body('student_id').trim().notEmpty().withMessage("Student ID is required").isLength({ min: 3 }).withMessage("Student ID must be at least 10 characters"),
+    body('student_id').trim().notEmpty().withMessage("Student ID is required"),
     body('full_name').trim().notEmpty().withMessage(" Full Name is required").isLength({ min: 3 }).withMessage(" Full Name must be at least 10 characters"),
     body('matric_no').trim().notEmpty().withMessage("Matric Number is required").isLength({ min: 3 }).withMessage("Matric Number must be at least 10 characters"),
     body('department').trim().notEmpty().withMessage("Department is required").isLength({ min: 3 }).withMessage("Department must be at least 10 characters"),
