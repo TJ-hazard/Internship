@@ -1,21 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { userValidationRules } = require('../pakages/validators');
+const { studentValidationRules } = require('../pakages/validators');
 const { validationResult } = require('express-validator');
 const { con } = require('../pakages/db.js');
 
+
+
+
 module.exports = () => {
 
-    router.post("/postData", userValidationRules, (req, res,) => {
-
-        console.log(req.body);
 
 
-        const errors = validationResult(req);
-        // if (!errors.isEmpty()) {
-        //     const alert = errors.array();
-        //     return res.render('register', { alert });
-        // };
+
+
+    router.post("/postData", studentValidationRules, async (req, res) => {
+
         const {
             student_id,
             full_name,
@@ -39,21 +38,67 @@ module.exports = () => {
             email_address,
             school,
         ];
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            const alert = errors.array();
+            return res.render('register', { alert });
+        };
+
+
+
         const insert_query = "INSERT INTO students(student_id,full_name,matric_no,department,level,faculty,phone_number,email_address,school) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)";
+
+
         try {
-            console.log("Before insert")
-            con.query(insert_query, values, (err, result) => console.log("err>>", err));
-            res.render('index');
-            // res.send('login');
+            await con.query(insert_query, values, (err, result) => {
+                res.redirect('/login');
+            })
+
         } catch (err) {
             console.log("err>>", err)
             // res.status(500).send(err);
         }
-
-
-
     }
     );
+
+    router.post('/login', async (req, res) => {
+        const {
+            student_id,
+            full_name,
+            matric_no,
+            department,
+            level,
+            faculty,
+            phone_number,
+            email_address,
+            school,
+        } = req.body;
+
+        const values = [
+            student_id,
+            full_name,
+            matric_no,
+            department,
+            level,
+            faculty,
+            phone_number,
+            email_address,
+            school,
+        ];
+
+        try {
+            const result = await con.query('SELECT * FROM students WHERE student_id =$1', [student_id]);
+            const user = result.rows[0];
+            if (!user) {
+                return res.redirect('/login')
+            }
+
+            req.session.user = {}
+        } catch (error) {
+
+        }
+    });
 
 
     router.get("/fetchData", (req, res) => {
@@ -62,7 +107,6 @@ module.exports = () => {
             if (err) {
                 res.status(500).send(err);
             } else {
-                res.render('index',)
                 res.send(result.rows);
             }
         });

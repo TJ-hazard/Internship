@@ -6,6 +6,32 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Congrats Login now</h2>
+    <h1></h1>
+    <form action="/", method="POST">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" >
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password">
+        </div>
+ 
+        <button type="submit", id="submit">Submit</button>
+    </form>
+
+    <% if(typeof alert != 'undefined'){%>
+        <% alert.forEach(function(error) { %>
+            <div class="alert">
+                <%= error.msg %>
+                <button type="button" class="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <% }) %>
+            <% } %>
+
 </body>
 </html>
