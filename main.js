@@ -7,6 +7,7 @@ const { validationResult } = require('express-validator');
 const otpGenerator = require('otp-generator');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 
 
@@ -16,6 +17,10 @@ const app = express();
 // middleware passer
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, 'views'));
+
+
 
 
 //Setting Template View
@@ -34,28 +39,80 @@ app.get('/', (req, res) => {
   res.render('dashboard');
 });
 
+
+const d = new Date()
+console.log(d);
+
+function async() {
+
+
+  const d = new Date()
+  console.log(d)
+}
+
+
+app.post('/verified', async (req, res) => {
+
+  const email = req.body.email;
+  const otp = req.body.otp;
+  const select_query = 'SELECT email, reset_token, token_expirydate FROM users WHERE email=$1';
+
+  const result = await con.query(select_query, [email]);
+
+  const user = result.rows[0];
+  // console.log("this.email>>", user.this.email);
+  console.log("use>>", user.email);
+  // user.forEach((row, index) => {
+
+  // })
+
+})
+
 app.post('/verify', async (req, res) => {
-  const db_otp = otpGenerator.generate(6, {
+
+
+  const startTime = new Date();
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail', // or use "host", "port", and "secure" for custom SMTP
+    auth: {
+      user: 'gbiyedefavour@gmail.com',        // your Gmail address
+      pass: 'jufntdetnzjifphb'             // app password, NOT yourreal password
+    }
+  });
+
+
+  const otp = otpGenerator.generate(6, {
     upperCaseAlphabets: false,
     specialChars: false,
     lowerCaseAlphabets: false,
   });
 
-  const {
-    email,
-    user_otp
-  } = req.body;
+  const email = req.body.email;
 
-  const values = [
-    email,
-    user_otp
-  ];
+  try {
+    let info = await transporter.sendMail({
+      from: '"My App" <gbiyedefavour@gmail.com>', // sender
+      to: email,                               // receiver
+      subject: 'Your OTP Code',
+      text: `Your OTP is ${otp}`,             // plain text body
+      html: `<b>Your OTP is ${otp}</b>`       // HTML body
+    });
+
+    console.log('Email sent: ', info.messageId);
+    res.json({ success: true, message: 'OTP sent to email', otp });
+  } catch (err) {
+    console.error('Error sending email:', err);
+    res.status(500).json({ success: false, message: 'Failed to send OTP' });
+  }
 
 
 
-  const insert_query = "INSERT INTO login(email_address,reset_token) VALUES($1,$2)";
+  const insert_query = 'INSERT INTO users(email, reset_token, token_expirydate) VALUES($1, $2,$3)';
 
-  con.query(insert_query, [email, db_otp])
+  con.query(insert_query, [email, otp, startTime], (err, result) => {
+    console.log(err);
+  })
 });
 
 
@@ -115,11 +172,6 @@ app.get('/login', (req, res) => {
 
 
 
-
-
-function requestOtp() {
-
-}
 
 
 
