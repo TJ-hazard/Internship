@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Internship Portal</title>
   <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/all_log.css" />
 </head>
 <body>
 
@@ -19,7 +20,7 @@
       <nav>
         <ul>
           <li><a href="/attendance">Attendance</a></li>
-          <li><a href="/allLog">All Log</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/calender">Calendar</a></li>
           <li><a href="/monthlyReport">Monthly Report</a></li>
         </ul>
@@ -28,17 +29,11 @@
 
     <!-- Center Content -->
     <main class="center">
-      <div class="report-box">
-        <h2>Submit Your Report</h2>
-        <form action="/dashboard" method="POST">
-          <input type="date" id="datepicker" class="date-input" name="date">
-        <textarea placeholder="Write your report here..." name="log"></textarea>
-        <div id="submit-btns">
- <input type="image" >
-        <button class="submit-btn" type="submit">Submit</button>
+      <div>
+        <input type="month" id="monthInput">
+        <div>
+
         </div>
-       
-        </form>
       </div>
     </main>
 
@@ -56,7 +51,7 @@
 
   </div>
 
-  <script src="/js/dashboard.js"></script>
+  <script src="/js/all_log.js"></script>
 
 </body>
 </html>

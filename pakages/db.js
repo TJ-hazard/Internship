@@ -6,6 +6,8 @@ const con = new Pool({
     port: 5432,
     password: "Tejiri123",
     database: "postgres",
+
+
 });
 
 

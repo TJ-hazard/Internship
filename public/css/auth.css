@@ -1,0 +1,86 @@
+/* General body and layout */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #e9fff7;
+}
+
+/* Header styling */
+.auth-header {
+  background-color: #007b5f;
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.auth-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.auth-header p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Form card styling */
+.auth-card {
+  max-width: 400px;
+  margin: 2rem auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Form labels and inputs */
+label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #004d3d;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cfeee2;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+  color: #999;
+}
+
+/* Button styling */
+button {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 12px;
+  background-color: #007b5f;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #005f48;
+}
+
+
+.alert-box {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}

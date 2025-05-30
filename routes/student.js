@@ -47,7 +47,7 @@ module.exports = () => {
 
 
 
-        const insert_query = "INSERT INTO students(student_id,full_name,matric_no,department,level,faculty,phone_number,email_address,school) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)";
+        const insert_query = "INSERT INTO students(student_id,full_name,matric_no,department,levels,faculty,phone_number,email,school) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)";
 
 
         try {

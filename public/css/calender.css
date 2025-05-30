@@ -1,0 +1,61 @@
+.calendar {
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  background: #f9f9f9;
+  padding: 20px;
+}
+
+.month ul {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.month ul li {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 20px;
+}
+
+.month .prev, .month .next {
+  cursor: pointer;
+  user-select: none;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #ddd;
+  display: flex;
+}
+
+.weekdays li {
+  text-align: center;
+  flex: 1;
+  padding: 10px;
+}
+
+.days {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.days li {
+  text-align: center;
+  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.days li:hover {
+  background-color: #f0f0f0;
+}
