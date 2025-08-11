@@ -1,0 +1,272 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #e6f2eb;
+  color: #222;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #23815b;
+  color: #fff;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 24px 24px 16px 24px;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0 0 0 24px;
+  margin: 0;
+}
+
+.sidebar nav ul li {
+  margin: 14px 0;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sidebar nav ul li:hover {
+  color: #b2dfdb;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 18px 24px;
+  font-size: 1.3rem;
+  color: #b2dfdb;
+  cursor: pointer;
+}
+
+
+
+h1 {
+  margin-top: 0;
+  font-size: 2rem;
+}
+
+.student-details {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(35, 129, 91, 0.06);
+}
+
+.student-details h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+  margin-bottom: 18px;
+}
+
+.details-grid div {
+  font-size: 1rem;
+  color: #23815b;
+}
+
+.details-grid span {
+  color: #222;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.approve {
+  background-color: #234d81;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.approve:hover {
+  background-color: #1a3b63;
+}
+
+.reject {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.reject:hover {
+  background-color: #c0392b;
+}
+
+.internship-status {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 8px rgba(35, 129, 91, 0.06);
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.status-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.export-pdf {
+  color: #234d81;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: text-decoration 0.2s;
+}
+
+.export-pdf:hover {
+  text-decoration: underline;
+}
+
+.status-card {
+  background: #f5fbf8;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  padding: 18px 18px 12px 18px;
+  box-shadow: 0 1px 4px rgba(35, 129, 91, 0.04);
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-row strong {
+  font-size: 1.1rem;
+  color: #234d81;
+}
+
+.status-row span {
+  display: block;
+  font-size: 0.98rem;
+  color: #555;
+}
+
+.status-state {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 6px;
+}
+
+.status-state.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-state.active {
+  background-color: #d4edda;
+  color: #23815b;
+}
+
+.status-desc {
+  margin: 12px 0 10px 0;
+  font-size: 1rem;
+  color: #222;
+}
+
+.status-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.verify {
+  background-color: #234d81;
+  color: #fff;
+  border: none;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.verify:hover {
+  background-color: #1a3b63;
+}
+
+.reject-outline {
+  background-color: #fff;
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.reject-outline:hover {
+  background-color: #fdecea;
+}
+
+.add-comment {
+  color: #234d81;
+  text-decoration: none;
+  font-size: 0.98rem;
+  margin-left: 12px;
+}
+
+.add-comment:hover {
+  text-decoration: underline;
+}
+
+.mark-complete {
+  background-color: #fff;
+  color: #23815b;
+  border: 2px solid #23815b;
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.mark-complete:hover {
+  background-color: #e6f2eb;
+}

@@ -1,0 +1,61 @@
+<h2 class="header"><%= trimmed_industry %> Supervisors</h2>
+<div class="search-container">
+  <div>
+    <input
+      id="search-input"
+      type="text"
+      name="query"
+      placeholder="Search  industries..."
+      value="<%= query || '' %>"
+      required />
+
+    <input type="hidden" name="industry" value="<%= trimmed_industry %>" />
+  </div>
+  <form
+    class="search-form"
+    action="/admin/industries/specific_Industry"
+    method="GET">
+    <% if(query) { %>
+    <button>
+      <a
+        href="/admin/industries/specific_Industry?industry=<%= trimmed_industry %>"
+        >↺</a
+      >
+    </button>
+    <% } %>
+
+    <!-- Pass the backend value as a hidden input -->
+
+    <button type="submit">🔍</button>
+  </form>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>Full Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>industry</th>
+    </tr>
+  </thead>
+  <% if(supervisors) { %>
+  <tbody>
+    <% supervisors.forEach((item, id) => { %>
+    <tr class="table-row">
+      <td><%= id +1 %></td>
+      <td>
+        <a class="table-link" href="/admin/instiitution"
+          ><%= item.full_name %></a
+        >
+      </td>
+      <td><%= item.phone_number %></td>
+      <td><%= item.email %></td>
+      <td><%= item.industry %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+  <% } %>
+</table>
+
+<div class="pagination" id="paginationControls"></div>

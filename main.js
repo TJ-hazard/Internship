@@ -1,16 +1,17 @@
-const { con } = require('./pakages/db.js');
+const { con } = require('./src/packages/db.js');
 const express = require("express");
-const studentRoutes = require("./routes/student.js");
-const supervisorRoutes = require("./routes/supervisor");
-const { userValidationRules } = require('./pakages/validators.js');
-const { validationResult } = require('express-validator');
 const otpGenerator = require('otp-generator');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const path = require('path');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const expressLayouts = require('express-ejs-layouts');
+const { admin_dashboard, admin_specific_institution_supervisors, admin_institutions, admin_industries, admin_specific_industry_supervisors, admin_students, admin_specific_students, admin_industries_supervisors, admin_institutions_supervisors, admin_institution_supervisor_student, admin_settings } = require('./src/roles/admin.js')
+const { getDashboard, postDashboard, dashboardAlllog, dashboardAttendance, dashboardCalender, dashboardMonthlyReport } = require('./src/roles/student.js')
 
 
 const app = express();
@@ -18,48 +19,43 @@ const app = express();
 
 
 
+
 // middleware passer
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/css', express.static(path.join(__dirname, '/public/css')));
-app.use('/js', express.static(path.join(__dirname, '/public/js')));
+app.use('/css', express.static(path.join(__dirname, 'src/public/css')));
+app.use('/js', express.static(path.join(__dirname, 'src/public/js')));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 60 * 60 * 1000,
+    secure: false
+  }
+}))
+app.use(expressLayouts)
 
-
+app.use(cookieParser());
 
 //Setting Template engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-//Routes 
-app.use("/students", studentRoutes(con));
-app.use("/supervisor", supervisorRoutes(con));
+app.set('views', path.join(__dirname, 'src/views'));
 
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
-
-  if (!token) return res.sendStatus(401); // No token provided
-
-  jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-    if (err) return res.sendStatus(403); // Token invalid or expired
-
-    req.user = user; // Store user data in request
-    next();
-  });
-}
+require('./src/packages/passport')(passport);
+app.use(passport.initialize());
 
 
 //Naviagtion
 app.get('/', (req, res) => {
-  res.render('home', { errors: {}, formData: {} });
+  res.render('home', { errors: {}, formData: {}, layout: false });
 
 });
 
 
-
-app.post('/verified', authenticateToken, async (req, res) => {
+// VERIFICATION PAGES
+app.post('/verified', async (req, res) => {
   const errors = {};
   const formData = {
     email: req.body.email,
@@ -94,24 +90,17 @@ app.post('/verified', authenticateToken, async (req, res) => {
       errors.otp = 'OTP expired';
       res.render('home', { errors, formData });
     } else {
-      const select_query = 'SELECT s.matric_no FROM users u INNER JOIN students s ON u.email = s.email WHERE u.email = $1;'
+      const select_query = 'SELECT * FROM users u INNER JOIN students s ON u.email = s.email WHERE u.email = $1;'
 
-      const matricNo_result = await con.query(select_query, [user_email])
+      const id = await con.query(select_query, [user_email])
 
-      const userMatricNo = matricNo_result.rows[0];
+      const user_id = id.rows[0];
 
-      const payload = {
-        userMatric_no: userMatricNo.matric_no
-      }
-
-      const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
-
-      res.json({ token });
-
+      req.session.user = user_id.matric_no;
       res.redirect('/register');
+
     }
   }
-
 })
 
 
@@ -182,16 +171,14 @@ app.post('/verify', async (req, res) => {
 });
 
 //Naviagtion
-app.get('/register', authenticateToken, (req, res) => {
-  const userMatric_no = req.user.matric_no;
-
-  if (!userMatric_no) {
-    return res.redirect('/');
+app.get('/register', (req, res) => {
+  const matric_no = req.session.user
+  if (!matric_no) {
+    res.redirect('/')
   } else {
-    res.render('register', { errors: {}, userMatric_no });
+    res.render('register', { errors: {}, matric_no, layout: false });
   }
 });
-
 
 app.post('/register', async (req, res) => {
   const errors = {}
@@ -225,7 +212,7 @@ app.post('/register', async (req, res) => {
 
 
 app.get('/login', (req, res) => {
-  res.render('login', { errors: {}, formData: {} });
+  res.render('login', { errors: {}, formData: {}, layout: false });
 });
 
 app.post('/login', async (req, res) => {
@@ -246,76 +233,111 @@ app.post('/login', async (req, res) => {
   } else {
     const user = result.rows[0];
 
-    const db_user = user.username;
     const db_password = user.password;
     const passwordMatch = await bcrypt.compare(password, db_password)
 
     if (passwordMatch) {
-      const fetch_query = 'SELECT s.full_name FROM register r INNER JOIN students s ON r.username = s.matric_no WHERE r.username = $1'
-      const result = await con.query(fetch_query, [username]);
-      const user = result.rows[0];
+      const fetch_querry = 'SELECT roles from roles r INNER JOIN students s on r.student_id = s.student_id WHERE s.matric_no =$1'
+      const result = await con.query(fetch_querry, [username]);
+      const roles = result.rows[0];
+      const role = roles.roles
 
 
-      req.session.userFullname = user.full_name;
-      await req.session.save();
-      res.redirect('/dashboard');
+      if (role === 'student') {
+        const fetch_query = 'SELECT * FROM register r INNER JOIN students s ON r.username = s.matric_no WHERE r.username = $1'
+        const result = await con.query(fetch_query, [username]);
+        const user = result.rows[0];
+        const payload = {
+          full_name: user.full_name,
+          student_id: user.student_id
+        }
+
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '5h' });
+
+        res.cookie('token', token, { httpOnly: true });
+        res.redirect('/dashboard');
+      }
+      else if (role === 'admin') {
+        const fetch_query = 'SELECT * FROM register r INNER JOIN students s ON r.username = s.matric_no WHERE r.username = $1'
+        const result = await con.query(fetch_query, [username]);
+        const user = result.rows[0];
+        const payload = {
+          full_name: user.full_name,
+          student_id: user.student_id
+        }
+
+        const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '5h' });
+
+        res.cookie('token', token, { httpOnly: true });
+        res.redirect('admin/dashboard');
+      } else {
+        res.render('login', { errors, formData, layout: false })
+      }
+
     } else {
       errors.password = "Invalid Password"
-      res.render('login', { errors, formData })
+      res.render('login', { errors, formData, layout: false })
     }
   }
 });
 
+// STUDENT PAGES
+app.use('/dashboard', passport.authenticate('jwt', { session: false }));
+app.use('/dashboard/css', express.static(path.join(__dirname, 'src/public/css')));
 
-app.get('/dashboard', async (req, res) => {
-  res.render('dashboard'
-  );
-});
+app.get('/dashboard', getDashboard);
 
+app.post('/dashboard', postDashboard);
 
-app.post('/dashboard', async (req, res) => {
-  const date = req.body.date;
-  const log = req.body.log;
+app.get('/dashboard/attendance', dashboardAttendance);
 
-  const select_query = 'SELECT student_id FROM students WHERE '
+app.get('/dashboard/calender', dashboardCalender);
 
-  const post_query = 'INSERT INTO logs(date,log,id) VALUES($1,$2,$3)';
-  con.query(post_query, [date, log,])
-});
+app.get('/dashboard/allLog', dashboardAlllog)
 
+app.get('/dashboard/monthlyReport', dashboardMonthlyReport);
 
 
-app.get('/attendance', (req, res) => {
-  res.render('attendance');
-});
+// ADMIN PAGES
+app.use('/admin', passport.authenticate('jwt', { session: false }));
+app.use('/admin/css', express.static(path.join(__dirname, 'src/public/css')));
+app.use('/admin/js', express.static(path.join(__dirname, 'src/public/js')))
 
-app.get('/calender', (req, res) => {
-  res.render('calender');
-});
+//DASHBOARD
+app.get('/admin/dashboard', admin_dashboard);
 
-app.get('/allLog', (req, res) => {
-  res.render('all_log');
+//
+app.get('/admin/institutions', admin_institutions)
+app.get('/admin/institutions/specific_institution', admin_specific_institution_supervisors)
+
+//
+app.get('/admin/industries', admin_industries)
+app.get('/admin/industries/specific_Industry', admin_specific_industry_supervisors)
+
+//
+app.get('/admin/students', admin_students)
+app.get('/admin/student', admin_specific_students)
+
+//
+app.get('/admin/industries/supervisors', admin_industries_supervisors)
+
+//
+app.get('/admin/institutions/supervisors', admin_institutions_supervisors)
+
+//
+app.get('/admin/settings', admin_settings)
+
+//
+app.get('/admin/institution/supervisor_students', admin_institution_supervisor_student)
+
+app.get('/test', (req, res) => {
+  res.render('test', {
+    layout: false
+  })
 })
-
-app.get('/monthlyReport', (req, res) => {
-  const fetch_query = 'SELECT FROM logs '
-  res.render('monthly_report');
-});
-
-
-
 app.listen(3000, () => {
   console.log('Server is running');
 });
-
-
-
-
-
-
-
-
-
 
 
 

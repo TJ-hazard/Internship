@@ -1,0 +1,43 @@
+<div class="table-container">
+<h2 class="header">Supervisors</h2>
+<div class="search-container">
+  <div class="search-form">
+    <input
+      id="search-input"
+      type="text"
+      name="query"
+      placeholder="Search  industries..."
+      value="<%= query || '' %>"
+      required />
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>Full Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>industry</th>
+    </tr>
+  </thead>
+  <% if(supervisors) { %>
+  <tbody>
+    <% supervisors.forEach((item, id) => { %>
+    <tr class="table-row">
+      <td><%= id +1 %></td>
+      <td>
+        <a class="table-link" href=""><%= item.full_name %></a>
+      </td>
+      <td><%= item.phone_number %></td>
+      <td><%= item.email %></td>
+      <td><%= item.industry %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+  <% } %>
+</table>
+<div class="pagination" id="paginationControls"></div>
+</div>
+</div>

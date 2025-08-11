@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Internship Log Book System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/all_log.css" />
+  </head>
+  <body>
+    <div class="header">
+      <span class="header-title">INTERNSHIP LOG BOOK SYSTEM</span>
+      <span class="header-user">
+        <!-- User Icon SVG -->
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="16" r="10" stroke="#fff" stroke-width="3" />
+          <ellipse
+            cx="24"
+            cy="36"
+            rx="15"
+            ry="8"
+            stroke="#fff"
+            stroke-width="3" />
+        </svg>
+      </span>
+    </div>
+    <div class="container">
+      <nav class="sidebar">
+        <ul>
+          <li><a href="/dashboard/attendance">Attendance</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/dashboard/calender">Calendar</a></li>
+          <li><a href="/dashboard/monthlyReport">Monthly Report</a></li>
+        </ul>
+      </nav>
+      <div class="main-content">
+        <div class="month-input-wrap">
+          <form action="/dashboard/allLog" method="GET">
+            <% if (month.length > 2) { const parts = month.split('-'); const
+            paddedMonth = String(parts[1]).padStart(2, '0'); month =
+            paddedMonth; } %>
+            <input
+              type="month"
+              class="month-input"
+              id="monthInput"
+              name="month"
+              value="<%= year %>-<%= month %>" />
+            <button type="submit">Show Log</button>
+          </form>
+        </div>
+
+        <div class="log-entries">
+          <div class="log-card">
+            <div class="log-date">02/01/2025</div>
+            <div class="log-textarea">TEXT AREA</div>
+          </div>
+          <div class="log-card">
+            <div class="log-date">02/01/2025</div>
+            <div class="log-textarea">TEXT AREA</div>
+          </div>
+          <div class="log-card">
+            <div class="log-date">02/01/2025</div>
+            <div class="log-textarea">TEXT AREA</div>
+          </div>
+          <div class="log-card">
+            <div class="log-date">02/01/2025</div>
+            <div class="log-textarea">TEXT AREA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer-content">
+        <div>
+          This platform is built to simplify internship registrations for
+          Nigerian students, supervisors, and ITF officials. It uses secure
+          email and OTP verification to ensure access control and data privacy
+          across all user roles.
+        </div>
+        <div class="footer-contact">
+          <span class="email">Email: support@itfportal.ng</span>
+          <span class="phone">Phone: +234 801 234 5678</span>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        © 2025 Nigerian ITF Registration Portal. All Rights Reserved.
+      </div>
+    </div>
+    <script src="/js/all_log.js"></script>
+  </body>
+</html>

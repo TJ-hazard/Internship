@@ -1,0 +1,152 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: #222;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #19795c;
+  padding: 0;
+  width: 100%;
+}
+
+.header-content {
+  width: 100%;
+  max-width: 1366px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 110px;
+  padding: 0 20px;
+}
+
+header h1 {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  width: 100%;
+  background: #fff;
+}
+
+.sidebar {
+  flex: 0 0 200px;
+  border-right: 1px solid #eee;
+  padding: 40px 10px 0 10px;
+  background: #fff;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 14px 0 14px 22px;
+  font-size: 1.1em;
+  color: #222;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar li:hover {
+  background: #f0f0f0;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+
+.content h2 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+
+footer {
+  background: #19795c;
+  color: #fff;
+  padding: 20px 20px 10px 20px;
+  font-size: 1em;
+  width: 100%;
+}
+
+.footer-desc {
+  text-align: center;
+  margin-bottom: 10px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-contact {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.footer-contact a {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.footer-about {
+  text-align: center;
+  font-size: 0.95em;
+  margin-bottom: 10px;
+}
+
+.alert-box {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 3px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 15px;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 10px;
+  margin-top: 30px;
+  font-size: 20px;
+  animation: fadeOut 1s ease-in-out forwards;
+  animation-delay: 4s;
+}

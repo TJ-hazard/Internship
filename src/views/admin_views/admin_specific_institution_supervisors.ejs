@@ -1,0 +1,59 @@
+<h2 class="header"><%= school %> Supervisors</h2>
+
+<div class="search-container">
+  <form
+    action="/admin/institutions/specific_institution"
+    method="GET"
+    class="search-form">
+    <% if(query) { %>
+    <button>
+      <a href="/admin/institutions/specific_institution?school=<%= school %>"
+        >↺</a
+      >
+    </button>
+    <% } %>
+    <input
+      id="search-input"
+      type="text"
+      name="query"
+      placeholder="Search  industries..."
+      value="<%= query || '' %>"
+      required />
+    <!-- Pass the backend value as a hidden input -->
+    <input type="hidden" name="school" value="<%= school %>" />
+    <button type="submit">🔍</button>
+  </form>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>Full Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Department</th>
+    </tr>
+  </thead>
+  <% if(institution) { %>
+  <tbody>
+    <% institution.forEach((item, id) => { %>
+    <tr class="table-row">
+      <td><%= id +1 %></td>
+      <td>
+        <a
+          class="table-link"
+          href="/admin/institution/supervisor_students?supervisor= <%= item.full_name %>"
+          ><%= item.full_name %></a
+        >
+      </td>
+      <td><%= item.phone %></td>
+      <td><%= item.email %></td>
+      <td><%= item.department %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+  <% } %>
+</table>
+
+<div class="pagination" id="paginationControls"></div>

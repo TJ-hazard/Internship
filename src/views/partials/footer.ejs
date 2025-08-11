@@ -1,0 +1,35 @@
+<footer class="main-footer">
+  <div class="footer-content">
+    <div>
+      &copy; <span id="copyright"></span> Your Name. All rights reserved.
+    </div>
+    <div class="footer-sides">
+      <div class="footer-section contact-info">
+        <h4>Contact Us</h4>
+        <p>Email: <a href="mailto:info@companyhub.ng">info@companyhub.ng</a></p>
+        <p>Phone: <a href="tel:+2348012345678">+234 801 234 5678</a></p>
+        <p>Address: 12, Adeola Odeku Street, Victoria Island, Lagos, Nigeria</p>
+      </div>
+
+      <div class="footer-section footer-links">
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> |
+        <a href="#">Help</a>
+      </div>
+    </div>
+
+    <div class="footer-section copyright">
+      <p>
+        &copy; <span id="copyright-year"></span> CompanyHub. All rights
+        reserved.
+      </p>
+      <p>
+        Unauthorized use, reproduction, or distribution of this website or any
+        part of it is strictly prohibited under the Copyright Act of the Federal
+        Republic of Nigeria.
+      </p>
+    </div>
+  </div>
+</footer>
+<script>
+  document.getElementById("copyright").textContent = new Date().getFullYear();
+</script>

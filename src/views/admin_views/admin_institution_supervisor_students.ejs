@@ -1,0 +1,39 @@
+<h1 class="view-supervisor">View Supervisor</h1>
+<section class="student-details">
+  <h2>Supervisor Details</h2>
+  <div class="details-grid">
+    <div><span>Name:</span> <%= supervisor_details.full_name %></div>
+    <div><span>Phone Number</span> <%= supervisor_details.phone %></div>
+    <div><span>Email</span> <%= supervisor_details.email %></div>
+    <div><span>Department</span> <%= supervisor_details.department %></div>
+    <div><span>Faculty</span> <%= supervisor_details.faculty %></div>
+    <div><span>Institution</span> <%= supervisor_details.school_name %></div>
+  </div>
+</section>
+
+<table>
+  <thead>
+    <tr>
+      <th>S/N</th>
+      <th>Full Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% students.forEach( (item, id) => { %>
+    <tr class="table-row">
+      <td><%= id +1 %></td>
+      <td>
+        <a class="table-link" href="/admin/student?student= <%=item.full_name%>"
+          ><%= item.full_name %></a
+        >
+      </td>
+      <td><%= item.phone_number %></td>
+      <td><%= item.email %></td>
+      <td><%= item.location %></td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>

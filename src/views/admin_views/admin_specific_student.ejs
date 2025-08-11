@@ -1,0 +1,28 @@
+<h1>View Student</h1>
+<section class="student-details">
+  <h2>Student Details</h2>
+  <div class="details-grid">
+    <% student_details.forEach(item => { %>
+    <div><span>Name:</span> <%= item.full_name %></div>
+    <div><span>Matric Number</span> <%= item.matric_no%></div>
+    <div><span>Email</span> <%= item.email %></div>
+    <div><span>Phone Number</span> <%= item.phone_number %></div>
+    <div><span>Department</span> <%= item.department %></div>
+    <div><span>Faculty</span> <%= item.faculty %></div>
+    <div><span>Level</span> <%= item.levels %></div>
+    <div><span>Internship Period </span> <%= item.levels %></div>
+    <div><span>Institution</span> <%= item.institution %></div>
+    <div><span>Industry</span> <%= item.instruction %></div>
+  </div>
+  <% }) %>
+  <div class="action-buttons">
+    <button onclick="" class="approve">Approve Registration</button>
+    <button class="reject">Reject Registration</button>
+  </div>
+</section>
+<section class="internship-status">
+  <div class="status-header">
+    <h2>Internship Status</h2>
+    <a href="#" class="export-pdf">Export PDF</a>
+  </div>
+</section>

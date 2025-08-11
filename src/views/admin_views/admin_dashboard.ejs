@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIWES Dashboard</title>
+    <link rel="stylesheet" href="/css/admin_dashboard.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>SIWES</h2>
+        <ul class="menu">
+          <li><a href="/admin/dashboard">Dashboard</a></li>
+          <li><a href="/admin/institutions">Institutions</a></li>
+          <li><a href="/admin/industries">Industries</a></li>
+          <li><a href="/admin/students">Students</a></li>
+          <li>
+            <a href="/admin/industries/supervisors">Industry Supervisors</a>
+          </li>
+          <li>
+            <a href="/admin/institutions/supervisors">Institution Supervisor</a>
+          </li>
+          <li><a href="/admin/settings">Settings</a></li>
+        </ul>
+        <div class="admin-footer">@Copyright 2025</div>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <h1>Dashboard</h1>
+          <div class="user-profile">
+            <img src="https://via.placeholder.com/40" alt="User" />
+            <span>John Doe<br /><small>Evieeiroioor</small></span>
+          </div>
+        </header>
+
+        <section class="cards">
+          <div class="card">
+            <h4>Total students</h4>
+            <p>1,250</p>
+          </div>
+          <div class="card">
+            <h4>Total Supervisors</h4>
+            <p>200</p>
+          </div>
+          <div class="card">
+            <h4>Total Industries</h4>
+            <p>1,100</p>
+          </div>
+          <div class="card">
+            <h4>Total Institutions</h4>
+            <p>3</p>
+          </div>
+        </section>
+
+        <section class="dashboard-lower">
+          <div class="chart-section">
+            <h3>Internship Statistics</h3>
+            <img src="/images/chart-placeholder.png" alt="Chart" />
+          </div>
+
+          <div class="announcement-section">
+            <div class="add-announcement">
+              <h3>Recent Announcement</h3>
+              <div class="dropdown">
+                <button onclick="toggleDropdown()" class="dropbtn">
+                  Menu ▼
+                </button>
+                <div id="dropdownContent" class="dropdown-content">
+                  <a href="/admin/dashboard?view=true">View All</a>
+                  <a href="#">Add</a>
+                  <a href="#">Logout</a>
+                </div>
+              </div>
+            </div>
+
+            <% if(view) {%> <% } %>
+
+            <div class="announcement">
+              <strong>System Maintenance</strong>
+              <p>System Maintenance on the 20/07/2024</p>
+            </div>
+            <div class="announcement">
+              <strong>New Internship Opportunities</strong>
+              <p>Chervon have annouced Internship</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="logbook-section">
+          <div class="view-all">
+            <h3>Internship Logbooks</h3>
+            <a href="">View All</a>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Internship</th>
+                <th>Supervier</th>
+                <th>Status</th>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Afale within</td>
+                <td>Software Development</td>
+                <td>Mr. town</td>
+                <td>
+                  <button class="status-btn">Status</button>
+                  <button class="search-btn">Search</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Ksdy Jahwem</td>
+                <td>Marketing</td>
+                <td>Mr. rock</td>
+                <td>
+                  <button class="status-btn">Status</button>
+                  <button class="search-btn">Search</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Charles Williams</td>
+                <td>Finance</td>
+                <td>Mr. Lon</td>
+                <td>
+                  <button class="status-btn">Status</button>
+                  <button class="search-btn">Search</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+    <script src="/js/admin_dashboard.js"></script>
+  </body>
+</html>

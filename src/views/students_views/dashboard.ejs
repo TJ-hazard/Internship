@@ -1,0 +1,93 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Internship Log Book System</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header >
+      <div class="header-content">
+        <h1 >INTERNSHIP LOG BOOK SYSTEM</h1>
+        <div class="profile-icon">
+          <svg height="32" width="32" viewBox="0 0 32 32">
+            <circle cx="16" cy="16" r="16" fill="#fff"/>
+            <circle cx="16" cy="13" r="6" fill="#19795c"/>
+            <ellipse cx="16" cy="25" rx="8" ry="6" fill="#19795c"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+
+    <main>
+      <aside class="sidebar">
+        <ul>
+          <li><a href="/dashboard/attendance">Attendance</a></li>
+          <li> <a href="/dashboard/alllog"> All Log</a></li>
+          <li> <a href="/dashboard/calender">Calender</a></li>
+          <li> <a href="/dashboard/monthlyReport">Monthly Report</a></li>
+        </ul>
+      </aside>
+      <section class="content">
+        <h2>SUBMIT YOUR DAILY LOG</h2>
+        <form action="/dashboard" method="POST" enctype="multipart/form-data" id="logForm">
+          <% const today = new Date(); %>
+          <% const dateOnly = today.toISOString().split('T')[0]; %>
+ <input class="month-input" type="date" id="datepicker" name="date" max="<%= dateOnly %>">
+        <textarea class="log-textarea" placeholder="Write your report here..." name="log" required></textarea>
+        <div class="button-row">
+          <input type="file" name="image" accept="image/*" />
+          <button class="submit-btn" type="submit">SUBMIT</button>
+        </form>
+       <div id="confirmationModal" class="modal-overlay">
+  <div class="modal-box">
+    <p>Are you sure you want to submit your log?</p>
+    <div class="modal-buttons">
+      <button id="confirmBtn" class="modal-confirm" type="button">Yes, Submit</button>
+      <button id="cancel-Btn" class="modal-cancel" type="button">Cancel</button>
+    </div>
+  </div>
+</div>
+        
+        <% if(success  && success.length >0 ){ %>
+           <div class="alert-success" id="alert-success">
+              <%= success %>
+           </div>
+        <%  }  %>
+      </section>
+      <aside class="right-panel">
+        <div class="right-box">Each daily log should cover activities done between 8:00 AM and 4:00 PM.
+Logs must be submitted within 24 hours of the recorded date.
+Delayed entries may require supervisor approval.
+        </div>
+        <div class="right-box">Use this simple format:Date: DD/MM/YYYY Activities: List key tasks Skills Gained: What you learned Keep entries clear and professional, avoid abbreviations.
+        </div>
+        <div class="right-box">📅 Wednesday, June 26 is a national public holiday.
+No log entry is required for that day.
+Please resume logging from Thursday, June 27.</div>
+      </aside>
+    </main>
+
+
+    <footer>
+      <div class="footer-desc">
+        <p>
+This platform is built to simplify internship registrations for Nigerian students, supervisors, and ITF officials. It uses secure email and OTP verification to ensure access control and data privacy across all user roles.
+        </p>
+        
+      </div>
+      <div class="footer-contact">
+        Contact Us<br>
+        Email: <a href="mailto:support@itfportal.ng">support@itfportal.ng</a><br>
+        Phone: +234 801 234 5678
+      </div>
+      <div class="footer-about">
+        © 2025 Nigerian ITF Registration Portal. All Rights Reserved.
+      </div>
+    </footer>
+    <script src="/js/dashboard.js"></script>
+
+</body>
+</html>

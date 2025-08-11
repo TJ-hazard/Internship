@@ -1,0 +1,50 @@
+<div class="table-container">
+  <h2 class="header">SIWES Registered Industries</h2>
+  <div class="search-container">
+    <div class="search-form">
+      <input
+        id="search-input"
+        type="text"
+        name="query"
+        placeholder="Search  industries..."
+        value="<%= query || '' %>"
+        required />
+    </div>
+  </div>
+  <% if(industries) { %>
+  <table>
+    <thead>
+      <tr>
+        <th>S/N</th>
+        <th></th>
+        <th>Full Name</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% industries.forEach( (item, id) => { %>
+      <tr class="table-row">
+        <td><%= id +1 %></td>
+        <td><button>Hey</button></td>
+        <td>
+          <a
+            class="table-link"
+            href="/admin/industries/specific_Industry?industry= <%=item.full_name%>"
+            ><%= item.full_name %></a
+          >
+        </td>
+        <td><%= item.phone_number %></td>
+        <td><%= item.email %></td>
+        <td><%= item.location %></td>
+      </tr>
+
+      <% }) %>
+      <!--  -->
+      <% } else { %> <% }%>
+    </tbody>
+  </table>
+
+  <div class="pagination" id="paginationControls"></div>
+</div>

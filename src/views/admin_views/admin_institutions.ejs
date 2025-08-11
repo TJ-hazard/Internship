@@ -1,0 +1,53 @@
+<div class="table-container">
+  <h2 class="header">SIWES Registered Schools</h2>
+  <div class="search-container">
+    <div class="search-form">
+      <input
+        id="search-input"
+        type="text"
+        name="query"
+        placeholder="Search  institutions..."
+        value="<%= query || '' %>"
+        required />
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>S/N</th>
+        <th>School Name</th>
+        <th>Phone Number</th>
+        <th>Email</th>
+        <th>Location</th>
+      </tr>
+    </thead>
+    <% if(universities) { %>
+    <tbody>
+      <% universities.forEach((school,id) => { %>
+      <tr class="table-row">
+        <td><%= id+1 %></td>
+        <td>
+          <a
+            class="table-link"
+            href="/admin/institutions/specific_institution?school=<%= school.full_name %>"
+            ><%= school.full_name %></a
+          >
+        </td>
+        <td><%= school.phone %></td>
+        <td><%= school.email %></td>
+        <td><%= school.location %></td>
+      </tr>
+      <% }) %>
+    </tbody>
+    <% } %>
+  </table>
+
+  <div class="pagination" id="paginationControls"></div>
+</div>
+
+<h1>Bar and Line Charts with Chart.js & Node.js</h1>
+
+<div style="width: 80%; margin: auto">
+  <canvas id="myChart"></canvas>
+</div>
